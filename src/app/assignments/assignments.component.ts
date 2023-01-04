@@ -8,10 +8,9 @@ import { Assignment } from './assignment.model';
 })
 export class AssignmentsComponent implements OnInit{
   titre = 'Application de gestion des assignments';
-  // champs du formulaire
-  nomAssignment = '';
-  dateDeRendu?:Date;
+
   boutonActif = false;
+  formVisible = false;
 
   assignmentSelectionne?:Assignment;
 
@@ -44,22 +43,20 @@ export class AssignmentsComponent implements OnInit{
     */
   }
 
-  onSubmit() {
-    if((!this.nomAssignment) || (!this.dateDeRendu)) { return; }
-
-    console.log(this.nomAssignment + " " + this.dateDeRendu);
-
-    let assignment = new Assignment();
-    assignment.nom = this.nomAssignment;
-    assignment.dateDeRendu = this.dateDeRendu;
-    assignment.rendu = false;
-
-    this.assignments.push(assignment);
-  }
 
   assignmentClicke(a:Assignment) {
     console.log("Assignment cliqué : " + a.nom);
-    
+
     this.assignmentSelectionne = a;
+  }
+
+  onAddAssignmentBtnClick() {
+    this.formVisible = true;
+  }
+
+  onNouvelAssignment(assignment:Assignment) {
+    console.log("Nouvel assignment reçu : " + assignment.nom);
+    this.assignments.push(assignment);
+    this.formVisible = false;
   }
 }

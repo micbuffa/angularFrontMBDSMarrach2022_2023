@@ -9,4 +9,9 @@ import { Assignment } from '../assignment.model';
 export class AssignmentDetailComponent {
   // déclaration des attributs HTML custom du composant
   @Input() assignmentTransmis?:Assignment;
+
+  onAssignmentRendu() {
+    if(this.assignmentTransmis)
+      this.assignmentTransmis.rendu = true;
+  }
 }
