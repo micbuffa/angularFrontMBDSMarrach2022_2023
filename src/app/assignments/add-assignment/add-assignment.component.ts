@@ -1,5 +1,6 @@
-import { outputAst } from '@angular/compiler';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { Assignment } from '../assignment.model';
 
 @Component({
@@ -8,26 +9,34 @@ import { Assignment } from '../assignment.model';
   styleUrls: ['./add-assignment.component.css'],
 })
 export class AddAssignmentComponent {
-  @Output() nouvelAssignment = new EventEmitter<Assignment>();
-
   // champs du formulaire
   nomAssignment = '';
   dateDeRendu?: Date;
 
-  onSubmit() {
-    if((!this.nomAssignment) || (!this.dateDeRendu)) { return; }
+  constructor(
+    private assignmentsService: AssignmentsService,
+    private router: Router
+  ) {}
 
-    console.log(this.nomAssignment + " " + this.dateDeRendu);
+  onSubmit() {
+    if (!this.nomAssignment || !this.dateDeRendu) {
+      return;
+    }
+
+    console.log(this.nomAssignment + ' ' + this.dateDeRendu);
 
     let assignment = new Assignment();
     assignment.nom = this.nomAssignment;
     assignment.dateDeRendu = this.dateDeRendu;
     assignment.rendu = false;
 
-    //this.assignments.push(assignment);
-    // on emet un evenement vers le père (ou autre)
-    // qui porte l'assignement à ajouter dans la liste
-    this.nouvelAssignment.emit(assignment);
-  }
+    // on utilise le service pour l'ajout
+    this.assignmentsService.addAssignment(assignment).subscribe((message) => {
+      console.log('Assignment ajouté !');
 
+      // on navigue par programmation vers la page d'accueil
+      // pour afficher la liste des assignments
+      this.router.navigate(['/home']);
+    });
+  }
 }
