@@ -6,8 +6,13 @@ DETAILS !!!!!
   </mat-card-content>
 
   <mat-card-actions class="actions">
-      <mat-checkbox (click)="onAssignmentRendu()" *ngIf="!assignmentTransmis.rendu">Rendu</mat-checkbox>
-      <button mat-raised-button color="warn" (click)="onDelete()">DELETE</button>
+    <mat-checkbox (click)="onAssignmentRendu()" *ngIf="!assignmentTransmis.rendu">Rendu</mat-checkbox>
+
+    <a [routerLink]="['/assignments', assignmentTransmis.id, 'edit']">
+      <button mat-raised-button color="warn" [disabled]="!isAdmin()">EDIT</button>
+    </a>
+
+    <button mat-raised-button color="warn" [disabled]="!isAdmin()" (click)="onDelete()">DELETE</button>
   </mat-card-actions>
 
 </mat-card>
