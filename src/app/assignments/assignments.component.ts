@@ -23,7 +23,7 @@ export class AssignmentsComponent implements OnInit {
   nextPage = false;
 
   assignments: Assignment[] = [];
-
+  displayedColumns: string[] = ['id', 'nom', 'dateDeRendu', 'rendu'];
   constructor(private assignmentsService: AssignmentsService) {}
 
   ngOnInit() {
@@ -74,7 +74,7 @@ export class AssignmentsComponent implements OnInit {
     this.page = this.totalPages;
     this.getAssignments();
   }
-  
+
   pageSuivante() {
     this.page++;
     this.getAssignments();
@@ -82,6 +82,13 @@ export class AssignmentsComponent implements OnInit {
 
   pagePrecedente() {
     this.page--;
+    this.getAssignments();
+  }
+
+  paginator(event: any) {
+    console.log(event);
+    this.page = event.pageIndex + 1;
+    this.limit = event.pageSize;
     this.getAssignments();
   }
 }

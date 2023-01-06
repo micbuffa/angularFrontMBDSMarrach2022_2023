@@ -35,15 +35,15 @@ export class AssignmentsService {
     private http: HttpClient
   ) {}
 
-  //URI = 'http://localhost:8010/api/assignments';
-  URI = 'https://marrakechback2023.herokuapp.com/api/assignments';
+  URI = 'http://localhost:8010/api/assignments';
+  //URI = 'https://marrakechback2023.herokuapp.com/api/assignments';
 
   getAssignments(): Observable<Assignment[]> {
     // renvoie un objet observable
     //return of(this.assignments);
     return this.http.get<Assignment[]>(this.URI);
   }
-  
+
   getAssignmentsAvecPagination(page:number, limit:number): Observable<any> {
     // renvoie un objet observable
     //return of(this.assignments);
